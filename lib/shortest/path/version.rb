@@ -1,3 +1,5 @@
 module Shortest
-  VERSION = "0.0.1"
+  module Path
+    VERSION = "0.0.1"
+  end
 end

@@ -5,7 +5,7 @@ require 'shortest/path/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "shortest-path"
-  spec.version       = Shortest::VERSION
+  spec.version       = Shortest::Path::VERSION
   spec.authors       = ["Dimitri Kurashvili"]
   spec.email         = ["dimakura@gmail.com"]
   spec.summary       = %q{finding shortest path}
