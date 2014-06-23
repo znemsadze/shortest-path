@@ -27,11 +27,15 @@ describe 'AStar' do
     @graph=build_graph(3)
     @p1=@graph[0] ; @p2=@graph[8]
     dist = heur = ->(p1,p2){ dx=p1.x-p2.x ; dy=p1.y-p2.y ; Math.sqrt(dx*dx + dy*dy) }
-
-puts "path length is: #{Shortest::Path.astar(dist, heur, @graph, @p1, @p2).size}"
-
+    @shortest=Shortest::Path.astar(dist, heur, @graph, @p1, @p2)
   end
 
   specify{ expect(@graph.size).to eq(9) }
   specify{ expect(@graph.edges.size).to eq(24) }
+  specify{ expect(@shortest.size).to eq(5) }
+  specify{ expect(@shortest[0]).to eq(@graph[0]) }
+  specify{ expect(@shortest[1]).to eq(@graph[1]) }
+  specify{ expect(@shortest[2]).to eq(@graph[4]) }
+  specify{ expect(@shortest[3]).to eq(@graph[5]) }
+  specify{ expect(@shortest[4]).to eq(@graph[8]) }
 end
