@@ -1,5 +1,3 @@
-require 'algorithms'
-
 module Shortest
   module Path
     class AStar
@@ -9,31 +7,31 @@ module Shortest
       end
 
       def search
-        closedset=[] ; openset=Containers::PriorityQueue.new ; came_from={}
+        closedset=[] ; openset=Shortest::Path::PriorityQueue.new ; came_from={}
         start_g_score=0 ; start_f_score=start_g_score+@heur.call(@start,@goal)
         g_score={@start => start_g_score} ; f_score={@start => start_f_score}
-        openset.push(@start, start_f_score)
+        openset.add_with_priority(@start, start_f_score)
 
 # debugger
 
         until openset.empty?
           current=openset.pop
-          return reconstruct_path(came_from,goal) if current==@goal
+          return reconstruct_path(came_from,@goal) if current==@goal
           closedset<<current
           @graph.neighbors(current).each do |neighbor|
             next if closedset.include?(neighbor)
             tentative_g_score=g_score[current]+@dist.call(current,neighbor)
 
-            openset.include?(neighbor)
-
-            # if (not openset.include?(neighbor)) or (tentative_g_score < (g_score[neighbor]||Float::INFINITY))
-            #   came_from[neighbor]=current
-            #   g_score[neighbor]=tentative_g_score
-            #   f_score[neighbor]=tentative_g_score+@heur.call(neighbor,@goal)
-            #   if not openset.include?(neighbor)
-            #     openset << neighbor
-            #   end
-            # end
+            if (not openset.include?(neighbor)) or (tentative_g_score < (g_score[neighbor]||Float::INFINITY))
+              came_from[neighbor]=current
+              g_score[neighbor]=tentative_g_score
+              f_score[neighbor]=tentative_g_score+@heur.call(neighbor,@goal)
+              if not openset.include?(neighbor)
+                openset.add_with_priority(neighbor, f_score[neighbor])
+              else
+                openset.change_priority(neighbor, f_score[neighbor])
+              end
+            end
           end
         end
         return [] # failure!
@@ -43,8 +41,9 @@ module Shortest
 
       def reconstruct_path(came_from, current_node)
         if came_from.include?(current_node)
-          came_from << current_node
-          came_from
+          p = reconstruct_path(came_from, came_from[current_node])
+          p << current_node
+          p
         else
           [current_node]
         end
