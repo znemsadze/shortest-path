@@ -14,12 +14,20 @@ module Shortest
       def add_with_priority(object, priority)
         item = PriorityQueueItem.new(object,priority)
         @heap << item
-        @heap.sort!{ |x,y| x.priority <=> y.priority }
+        sort_by_priority
+      end
+
+      def change_priority(object, priority)
+        @heap.select{|x| x.item==object}.first.priority=priority
+        sort_by_priority
       end
 
       def pop; @heap.delete_at(0).item end
       def empty?; @heap.empty? end
       def include?(object); @heap.select{|x| x.item==object}.any? end
+
+      private
+      def sort_by_priority; @heap.sort!{ |x,y| x.priority <=> y.priority } end
     end
   end
 end
