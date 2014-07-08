@@ -1,52 +1,45 @@
 module Shortest
   module Path
+    class PriorityQueue
+      def initialize; @list = [] end
+
+      def add(priority, item)
+        @list << [priority, @list.length, item]
+        @list.sort!
+        self
+      end
+
+      def <<(pritem); add(*pritem) end
+      def next; @list.shift[2] end
+      def empty?; @list.empty? end
+    end
+
     class AStar
-      def initialize(dist,heur,graph,start,goal)
-        @dist=dist ; @heur=heur ; @graph=graph
-        @start=start ; @goal=goal
+      def initialize(dist, cost, graph, start, goal)
+        @graph = graph
+        @dist  = dist ; @cost = cost
+        @start = start ; @goal=goal
       end
 
       def search
-        closedset=[] ; openset=Shortest::Path::PriorityQueue.new ; came_from={}
-        start_g_score=0 ; start_f_score=start_g_score+@heur.call(@start,@goal)
-        g_score={@start => start_g_score} ; f_score={@start => start_f_score}
-        openset.add_with_priority(@start, start_f_score)
-
-# debugger
-
-        until openset.empty?
-          current=openset.pop
-          return reconstruct_path(came_from,@goal) if current==@goal
-          closedset<<current
-          @graph.neighbors(current).each do |neighbor|
-            next if closedset.include?(neighbor)
-            tentative_g_score=g_score[current]+@dist.call(current,neighbor)
-
-            if (not openset.include?(neighbor)) or (tentative_g_score < (g_score[neighbor]||Float::INFINITY))
-              came_from[neighbor]=current
-              g_score[neighbor]=tentative_g_score
-              f_score[neighbor]=tentative_g_score+@heur.call(neighbor,@goal)
-              if not openset.include?(neighbor)
-                openset.add_with_priority(neighbor, f_score[neighbor])
-              else
-                openset.change_priority(neighbor, f_score[neighbor])
-              end
-            end
+        been_there = {}
+        pqueue = Shortest::Path::PriorityQueue.new
+        pqueue << [1, [@start, [], 0]]
+        while !pqueue.empty?
+          spot, path_so_far, cost_so_far = pqueue.next
+          next if been_there[spot]
+          newpath = path_so_far + [spot]
+          return newpath if (spot == @goal)
+          been_there[spot] = 1
+          @graph.neighbors(spot).each do |newspot|
+            next if been_there[newspot]
+            tcost = @cost.call(spot, newspot)
+            next unless tcost
+            newcost = cost_so_far + tcost
+            pqueue << [newcost + @dist.call(@goal, newspot), [newspot, newpath, newcost]]
           end
         end
-        return [] # failure!
-      end
-
-      private
-
-      def reconstruct_path(came_from, current_node)
-        if came_from.include?(current_node)
-          p = reconstruct_path(came_from, came_from[current_node])
-          p << current_node
-          p
-        else
-          [current_node]
-        end
+        return []
       end
     end
 
@@ -55,9 +48,7 @@ module Shortest
     # `graph` graph structure
     # `start` start node
     # `goal` goal node
-    def astar(dist,heur,graph,start,goal)
-      Shortest::Path::AStar.new(dist,heur,graph,start,goal).search
-    end
+    def astar(dist, heur, graph, start, goal); Shortest::Path::AStar.new(dist, heur, graph, start, goal).search end
 
     module_function :astar
   end
