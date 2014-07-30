@@ -11,7 +11,7 @@ module Shortest
     end
 
     class Graph < Array
-      attr_reader :edges
+      attr_accessor :edges
 
       def initialize
         @edges=[]
