@@ -1,7 +1,6 @@
 module Shortest
   module Path
 
-
 # @see http://branch14.org/snippets/a_star_in_ruby.html
 
     class PriorityQueue
