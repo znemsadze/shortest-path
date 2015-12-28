@@ -21,10 +21,10 @@ module Shortest
         # raise "No such vertex: #{src}" unless self.include?(src)
         # raise "No such vertex: #{dst}" unless self.include?(dst)
         
-        if(@edges[src]!=nil )
-          @edges[:src][dst]=length
+        if(@edges.has_key?(src) )
+          @edges[src][dst]=length
         else
-          @edges[:src]={dst=>length}
+          @edges[src]={dst=>length}
         end
 
         # @edges.push Edge.new(src, dst, length)

@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="89bfdafe-1c73-4b72-86d4-e903397493ff" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/shortest/path/astar.rb" afterPath="$PROJECT_DIR$/lib/shortest/path/astar.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/shortest/path/general.rb" afterPath="$PROJECT_DIR$/lib/shortest/path/general.rb" />
     </list>
     <ignored path="shortest-path.iws" />
@@ -59,7 +58,7 @@
         <entry file="file://$PROJECT_DIR$/lib/shortest/path/general.rb">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="57" column="8" selection-start-line="57" selection-start-column="8" selection-end-line="57" selection-end-column="8" />
+              <caret line="58" column="8" selection-start-line="58" selection-start-column="8" selection-end-line="58" selection-end-column="8" />
               <folding />
             </state>
           </provider>
@@ -627,7 +626,7 @@
     <entry file="file://$PROJECT_DIR$/lib/shortest/path/general.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="57" column="8" selection-start-line="57" selection-start-column="8" selection-end-line="57" selection-end-column="8" />
+          <caret line="58" column="8" selection-start-line="58" selection-start-column="8" selection-end-line="58" selection-end-column="8" />
           <folding />
         </state>
       </provider>

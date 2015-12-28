@@ -38,9 +38,9 @@ module Shortest
           @graph.neighbors(spot).each do |newspot,value|
             next if been_there[newspot]
              # tcost = @cost.call(spot, newspot)
-             value.values.each do |v|
-               tcost=v
-             end
+              
+               tcost=value
+             
 
             next unless tcost
             newcost = cost_so_far + tcost
