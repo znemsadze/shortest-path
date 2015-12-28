@@ -19,6 +19,7 @@ module Shortest
 
     class AStar
       def initialize(dist, cost, graph, start, goal)
+
         @graph = graph
         @dist  = dist ; @cost = cost
         @start = start ; @goal=goal
@@ -34,9 +35,13 @@ module Shortest
           newpath = path_so_far + [spot]
           return newpath if (spot == @goal)
           been_there[spot] = 1
-          @graph.neighbors(spot).each do |newspot|
+          @graph.neighbors(spot).each do |newspot,value|
             next if been_there[newspot]
-            tcost = @cost.call(spot, newspot)
+             # tcost = @cost.call(spot, newspot)
+             value.values.each do |v|
+               tcost=v
+             end
+
             next unless tcost
             newcost = cost_so_far + tcost
             pqueue << [newcost + @dist.call(@goal, newspot), [newspot, newpath, newcost]]

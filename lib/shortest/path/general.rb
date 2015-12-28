@@ -10,17 +10,24 @@ module Shortest
       end
     end
 
-    class Graph < Array
+    class Graph #< Array
       attr_accessor :edges
 
       def initialize
-        @edges=[]
+        @edges={}
       end
 
       def connect(src, dst, length)
-        raise "No such vertex: #{src}" unless self.include?(src)
-        raise "No such vertex: #{dst}" unless self.include?(dst)
-        @edges.push Edge.new(src, dst, length)
+        # raise "No such vertex: #{src}" unless self.include?(src)
+        # raise "No such vertex: #{dst}" unless self.include?(dst)
+        
+        if(@edges[src]!=nil )
+          @edges[:src][dst]=length
+        else
+          @edges[:src]={dst=>length}
+        end
+
+        # @edges.push Edge.new(src, dst, length)
       end
 
       def connect_mutually(vertex1, vertex2, length)
@@ -29,16 +36,26 @@ module Shortest
       end
 
       def remove_edge(vertex1, vertex2)
-        for_remove = @edges.select{ |e| (e.src == vertex1 && e.dst == vertex2) || (e.src == vertex2 && e.dst == vertex1) }
-        for_remove.each do |edge|
-          @edges.delete_at(@edges.index(edge))
+        if(@edges[vertex1]!=nil)
+            @edges[vertex1]=@edges[vertex1].except(:vertex2);
         end
+        
+        if(@edges[vertex2]!=nil)
+            @edges[vertex2]=@edges[vertex2].except(:vertex1);
+        end
+        # for_remove = @edges.select{ |e| (e.src == vertex1 && e.dst == vertex2) || (e.src == vertex2 && e.dst == vertex1) }
+        #
+        # for_remove.each do |edge|
+        #   @edges.delete_at(@edges.index(edge))
+        # end
       end
 
       def neighbors(vertex)
-        neighbors = []
-        @edges.each{|edge| neighbors.push edge.dst if edge.src==vertex }
-        neighbors.uniq
+        # neighbors = []
+        # @edges.each{|edge| neighbors.push edge.dst if edge.src==vertex }
+        @edges[vertex]
+
+        # neighbors.uniq
       end
     end
   end
