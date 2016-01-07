@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="89bfdafe-1c73-4b72-86d4-e903397493ff" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/shortest/path/general.rb" afterPath="$PROJECT_DIR$/lib/shortest/path/general.rb" />
-    </list>
+    <list default="true" id="89bfdafe-1c73-4b72-86d4-e903397493ff" name="Default" comment="" />
     <ignored path="shortest-path.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path=".idea/dataSources.local.xml" />
