@@ -5,10 +5,10 @@ describe 'Normal path for graph creation' do
     @graph=Shortest::Path::Graph.new
     (1..4).each{|x| @graph.push x}
     expect(@graph.size).to eq(4)
-    @graph.connect_mutually 1, 2, 10
-    @graph.connect_mutually 1, 3, 10
-    @graph.connect_mutually 1, 4, 10
-    @graph.connect_mutually 2, 4, 10
+    @graph.connect_mutually 1, 2, 10, 0
+    @graph.connect_mutually 1, 3, 10, 0
+    @graph.connect_mutually 1, 4, 10, 0
+    @graph.connect_mutually 2, 4, 10, 0
 
     @first_edge=@graph.edges.first
   end
@@ -26,12 +26,12 @@ describe 'Remove graph edge' do
   before(:all) do
     @graph=Shortest::Path::Graph.new
     (1..4).each{|x| @graph.push x}
-    @graph.connect_mutually 1, 2, 10
-    @graph.connect_mutually 1, 3, 10
-    @graph.connect_mutually 1, 4, 10
-    @graph.connect_mutually 2, 4, 10
-    @graph.connect_mutually 2, 3, 10
-    @graph.connect_mutually 3, 4, 10
+    @graph.connect_mutually 1, 2, 10, 0
+    @graph.connect_mutually 1, 3, 10, 0
+    @graph.connect_mutually 1, 4, 10, 0
+    @graph.connect_mutually 2, 4, 10, 0
+    @graph.connect_mutually 2, 3, 10, 0
+    @graph.connect_mutually 3, 4, 10, 0
 
     @graph.remove_edge(1, 2)
     @graph.remove_edge(1, 3)

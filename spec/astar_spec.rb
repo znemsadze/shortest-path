@@ -16,8 +16,8 @@ def build_graph(n)
     end
   end
   (0..n*n-1).each do |i|
-    graph.connect_mutually(graph[i], graph[i+1], 1) unless (i+1)%n == 0
-    graph.connect_mutually(graph[i], graph[i+n], 1) unless i+1 > n*(n-1)
+    graph.connect_mutually(graph[i], graph[i+1], 1,0) unless (i+1)%n == 0
+    graph.connect_mutually(graph[i], graph[i+n], 1,0) unless i+1 > n*(n-1)
   end
   graph
 end

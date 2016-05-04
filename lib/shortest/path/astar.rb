@@ -35,16 +35,18 @@ module Shortest
           newpath = path_so_far + [spot]
           return newpath if (spot == @goal)
           been_there[spot] = 1
-          @graph.neighbors(spot).each do |newspot,value|
-            next if been_there[newspot]
-             # tcost = @cost.call(spot, newspot)
-              
-               tcost=value
-             
+          if(@graph.neighbors(spot)!=nil)
+            @graph.neighbors(spot).each do |newspot,value|
+              next if been_there[newspot]
+               # tcost = @cost.call(spot, newspot)
 
-            next unless tcost
-            newcost = cost_so_far + tcost
-            pqueue << [newcost + @dist.call(@goal, newspot), [newspot, newpath, newcost]]
+                 tcost=value
+
+
+              next unless tcost
+              newcost = cost_so_far + tcost
+              pqueue << [newcost + @dist.call(@goal, newspot), [newspot, newpath, newcost]]
+            end
           end
         end
         return []
